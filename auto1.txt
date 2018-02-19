@@ -1,0 +1,12 @@
+5
+1 1 0
+2 0 0
+3 0 0
+4 0 0
+5 0 1
+1 2 pronom_interrogatif
+1 3 determinant
+2 3 verbe
+3 3 determinant
+3 4 nom_rubrique
+4 5 fin

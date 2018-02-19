@@ -7,11 +7,12 @@
 class Automate {
 
 private:
-  std::string alpha[256]; 		// alphabet
+  std::string alpha[256]; 		// Alphabet
+  Etat* current; // Etat courant
 
 public:
   Automate(std::string file);
-  int transition(const unsigned int etat, const std::string & word) const;
+  void transition(const std::string & word);
 };
 
 

@@ -7,7 +7,7 @@ int main(int argc, char* argv[]){
 
   Automate autom = Automate("test.txt");
 
-  autom.transition(5,"hello");
+  autom.transition("Quel");
 
   return 0;
 }
