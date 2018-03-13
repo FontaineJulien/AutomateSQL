@@ -7,7 +7,8 @@
 
 class PronomInterrogatif : public InterfaceMot {
 
-  void updateRequete(Requete requete, Etat etat) {};
+public:
+  void updateRequete(Requete requete, Etat etat);
 };
 
 #endif

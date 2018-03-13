@@ -1,6 +1,6 @@
 all: run
 
-run: main.o automate.o etat.o requete.o pronomInterrogatif.o
+run: main.o automate.o etat.o requete.o pronomInterrogatif.o determinant.o nomRubrique.o valeurRubrique.o verbe.o
 	g++ -Wall -o $@ $^
 
 %.o: %.cpp

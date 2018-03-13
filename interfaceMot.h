@@ -4,7 +4,7 @@
 #include "requete.h"
 #include "etat.h"
 
-class InterfaceMot{
+class InterfaceMot {
 
 public:
   virtual void updateRequete(Requete requete, Etat etat) =0;
