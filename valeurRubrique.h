@@ -8,6 +8,7 @@
 class ValeurRubrique : public InterfaceMot {
 
 public:
+  ValeurRubrique(std::string mot) : InterfaceMot(mot) {};
   void updateRequete(Requete requete, Etat etat);
 
 };

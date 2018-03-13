@@ -5,9 +5,8 @@ using namespace std;
 
 int main(int argc, char* argv[]){
 
-  Automate autom = Automate("test.txt");
-
-  autom.transition("Quel");
+  Automate autom = Automate();
+  autom.loadAlpha((char *)"dico.txt");
 
   return 0;
 }

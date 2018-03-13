@@ -7,6 +7,6 @@ Etat::Etat(unsigned int etiquette, bool is_initial, bool is_final) : etiquette(e
   this->is_initial = is_initial;
 }
 
-Etat* Etat::doTransition(const string& word) const {
-  return transitions.find(word)->second;
+Etat* Etat::doTransition(InterfaceMot* mot) const {
+  return transitions.find(mot)->second;
 }

@@ -3,19 +3,20 @@
 
 #include <iostream>
 #include "etat.h"
+#include "interfaceMot.h"
+#include <vector>
 
 class Automate {
 
 private:
-  std::string alpha[256]; 		// Alphabet
+  std::vector<InterfaceMot*> alpha; 		// Alphabet
   Etat* current; // Etat courant
 
 public:
-  Automate(std::string file);
-  void transition(const std::string & word);
+  Automate();
+  void transition(InterfaceMot* mot);
+  void loadAlpha(char* inputFile);
+  void loadAutomate(char* inputFile);
 };
-
-
-
 
 #endif

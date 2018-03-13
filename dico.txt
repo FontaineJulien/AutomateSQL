@@ -1,5 +1,6 @@
 quels pronom_interrogatif
 sont verbe
 les determinant
-etudiants table
+etudiants nom_rubrique
 ? fin
+EOF
