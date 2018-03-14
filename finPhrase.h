@@ -8,7 +8,7 @@
 class FinPhrase : public InterfaceMot {
 
 public:
-  FinPhrase(std::string mot) : InterfaceMot(mot) {};
+  FinPhrase(std::string mot) : InterfaceMot(mot,"fin") {};
   void updateRequete(Requete requete, Etat etat);
 
 };

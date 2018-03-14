@@ -8,7 +8,7 @@
 class Determinant : public InterfaceMot {
 
 public:
-  Determinant(std::string mot) : InterfaceMot(mot) {};
+  Determinant(std::string mot) : InterfaceMot(mot,"determinant") {};
   void updateRequete(Requete requete, Etat etat);
 
 };

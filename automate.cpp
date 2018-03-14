@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include<cstdlib>
+#include <locale>
 
 #include "pronomInterrogatif.h"
 #include "verbe.h"
@@ -11,16 +12,45 @@
 
 using namespace std;
 
-Automate::Automate() {
-  this->current = new Etat(1);
-  Etat* e2 = new Etat(2);
-  //this->current->setTransition("Quel",e2);
+std::string to_lower(const std::string& str) {
+  locale loc;
+  string lc_str = "";
+
+  for (string::size_type i=0; i<str.length(); ++i)
+    lc_str += std::tolower(str[i],loc);
+
+  return lc_str;
 }
 
-void Automate::transition(InterfaceMot* mot) {
-  cout << "current : " << current->getEtiquette() << endl;
-  current = current->doTransition(mot);
-  cout << "current : " << current->getEtiquette() << endl;
+Automate::Automate() {
+
+}
+
+InterfaceMot* Automate::find(const std::string& str_mot) {
+  for(vector<InterfaceMot*>::const_iterator it = alpha.begin(); it != alpha.end(); ++it) {
+    if((*it)->getMot().compare(to_lower(str_mot)) == 0) {
+      return *it;
+    }
+  }
+
+  return NULL;
+}
+
+void Automate::transition(const string& str_mot) {
+  InterfaceMot* mot = find(str_mot);
+  if(mot != NULL){
+    cout << "current : " << current->getEtiquette() << endl;
+    current = current->doTransition(mot->getTypeMot());
+    if(current == NULL) {
+      cerr << "Mot invalide : " << str_mot << endl;
+      exit(1);
+    }
+    cout << "current : " << current->getEtiquette() << endl;
+  } else {
+    cerr << "Mot inconnu : " << str_mot << endl;
+    exit(1);
+  }
+
 }
 
 void Automate::loadAlpha(char* inputFile) {
@@ -39,26 +69,25 @@ void Automate::loadAlpha(char* inputFile) {
         running = false;
       } else {
         InterfaceMot* p;
-        if(type_mot.compare("pronom_interrogatif")) {
+        if(type_mot.compare("pronom_interrogatif") == 0) {
           p = new PronomInterrogatif(mot);
         } else {
-          if(type_mot.compare("verbe")) {
+          if(type_mot.compare("verbe") == 0) {
             p = new Verbe(mot);
           } else {
-            if(type_mot.compare("determinant")) {
+            if(type_mot.compare("determinant") == 0) {
               p = new Determinant(mot);
             } else {
-              if(type_mot.compare("nom_rubrique")) {
+              if(type_mot.compare("nom_rubrique") == 0) {
                 p = new NomRubrique(mot);
               } else {
-                if(type_mot.compare("fin")) {
+                if(type_mot.compare("fin") == 0) {
                   p = new FinPhrase(mot);
                 }
               }
             }
           }
         }
-        cout << p->getMot() << endl;
         alpha.push_back(p);
       }
     }
@@ -71,5 +100,33 @@ void Automate::loadAlpha(char* inputFile) {
 }
 
 void Automate::loadAutomate(char* inputFile) {
+  ifstream file;
+  unsigned int nb_etat, nb_transition, id_etat, is_initial, is_final;
+  unsigned int etat_src, etat_dst;
+  string type_mot;
 
+  file.open(inputFile);
+
+  if(file.is_open()){
+    file >> nb_etat >> nb_transition;
+
+    for(unsigned int i = 0; i < nb_etat; i++){
+      file >> id_etat >> is_initial >> is_final;
+      Etat* e = new Etat(id_etat, (bool)is_initial, (bool)is_final);
+      autom.push_back(e);
+      if(is_initial == 1)
+        current = e;
+    }
+
+    for(unsigned int i = 0; i < nb_transition; i++){
+      file >> etat_src >> etat_dst >> type_mot;
+      autom[etat_src-1]->setTransition(type_mot, autom[etat_dst-1]);
+    }
+
+    file.close();
+
+  } else {
+    cerr << "Impossible d'ouvrir le fichier : " << inputFile << endl;
+    exit(1);
+  }
 }
