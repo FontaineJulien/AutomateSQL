@@ -13,7 +13,7 @@ private:
 
 public:
   InterfaceMot(std::string mot, std::string type_mot) : mot(mot), type_mot(type_mot) {};
-  virtual void updateRequete(Requete requete, Etat etat) =0;
+  virtual void updateRequete(Requete* requete) =0;
   virtual ~InterfaceMot() {};
   std::string getMot() const { return mot; };
   std::string getTypeMot() const { return type_mot; };

@@ -1,5 +1,5 @@
 #include "valeurRubrique.h"
 
-void ValeurRubrique::updateRequete(Requete requete, Etat etat) {
-
+void ValeurRubrique::updateRequete(Requete* requete) {
+  requete->updateValeursRubrique(this->getMot());
 }

@@ -1,5 +1,5 @@
 #include "verbe.h"
 
-void Verbe::updateRequete(Requete requete, Etat etat) {
-  
+void Verbe::updateRequete(Requete* requete) {
+
 }

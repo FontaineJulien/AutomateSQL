@@ -1,5 +1,5 @@
 #include "finPhrase.h"
 
-void FinPhrase::updateRequete(Requete requete, Etat etat) {
+void FinPhrase::updateRequete(Requete* requete) {
 
 }

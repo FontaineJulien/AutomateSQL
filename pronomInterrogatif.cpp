@@ -1,5 +1,5 @@
 #include "pronomInterrogatif.h"
 
-void PronomInterrogatif::updateRequete(Requete requete, Etat etat) {
+void PronomInterrogatif::updateRequete(Requete* requete) {
 
 }

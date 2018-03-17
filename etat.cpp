@@ -2,13 +2,16 @@
 
 using namespace std;
 
+#include "interfaceMot.h"
+
 Etat::Etat(unsigned int etiquette, bool is_initial, bool is_final) : etiquette(etiquette) {
   this->is_final = is_final;
   this->is_initial = is_initial;
 }
 
-Etat* Etat::doTransition(const string& mot) const {
-  return transitions.find(mot)->second;
+Etat* Etat::doTransition(InterfaceMot* mot, Requete* requete) {
+  mot->updateRequete(requete);
+  return transitions.find(mot->getTypeMot())->second;
 }
 
 void Etat::printTransitions() const {

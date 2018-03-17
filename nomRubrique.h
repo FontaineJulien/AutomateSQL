@@ -9,7 +9,7 @@ class NomRubrique : public InterfaceMot {
 
 public:
   NomRubrique(std::string mot) : InterfaceMot(mot,"nom_rubrique") {};
-  void updateRequete(Requete requete, Etat etat);
+  void updateRequete(Requete* requete);
 
 };
 

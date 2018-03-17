@@ -9,6 +9,8 @@
 #include "finPhrase.h"
 #include "nomRubrique.h"
 #include "determinant.h"
+#include "valeurRubrique.h"
+#include "qualificateur.h"
 
 using namespace std;
 
@@ -23,7 +25,7 @@ std::string to_lower(const std::string& str) {
 }
 
 Automate::Automate() {
-
+  requete = new Requete();
 }
 
 InterfaceMot* Automate::find(const std::string& str_mot) {
@@ -39,13 +41,12 @@ InterfaceMot* Automate::find(const std::string& str_mot) {
 void Automate::transition(const string& str_mot) {
   InterfaceMot* mot = find(str_mot);
   if(mot != NULL){
-    cout << "current : " << current->getEtiquette() << endl;
-    current = current->doTransition(mot->getTypeMot());
+    current = current->doTransition(mot,requete);
+    //cout << current->getEtiquette() << endl;
     if(current == NULL) {
       cerr << "Mot invalide : " << str_mot << endl;
       exit(1);
     }
-    cout << "current : " << current->getEtiquette() << endl;
   } else {
     cerr << "Mot inconnu : " << str_mot << endl;
     exit(1);
@@ -83,6 +84,12 @@ void Automate::loadAlpha(char* inputFile) {
               } else {
                 if(type_mot.compare("fin") == 0) {
                   p = new FinPhrase(mot);
+                } else {
+                  if(type_mot.compare("valeur_rubrique") == 0) {
+                    p = new ValeurRubrique(mot);
+                  } else {
+                    p = new Qualificateur(mot,type_mot);
+                  }
                 }
               }
             }
@@ -120,8 +127,14 @@ void Automate::loadAutomate(char* inputFile) {
 
     for(unsigned int i = 0; i < nb_transition; i++){
       file >> etat_src >> etat_dst >> type_mot;
+      //cout << etat_src << " " << etat_dst << " " << type_mot << endl;
       autom[etat_src-1]->setTransition(type_mot, autom[etat_dst-1]);
     }
+
+    /*for(vector<Etat*>::iterator it = autom.begin(); it != autom.end(); ++it) {
+      (*it)->printTransitions();
+      cout << endl;
+    }*/
 
     file.close();
 

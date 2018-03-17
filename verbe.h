@@ -9,7 +9,7 @@ class Verbe : public InterfaceMot {
 
 public:
   Verbe(std::string mot) : InterfaceMot(mot,"verbe") {};
-  void updateRequete(Requete requete, Etat etat);
+  void updateRequete(Requete* requete);
 
 };
 

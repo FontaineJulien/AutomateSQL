@@ -1,6 +1,10 @@
 quels pronom_interrogatif
 sont verbe
 les determinant
+de determinant
 etudiants nom_rubrique
+nom valeur_rubrique
+prenom valeur_rubrique
 ? fin
+m1_info diplome
 EOF
