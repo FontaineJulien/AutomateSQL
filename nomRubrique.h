@@ -7,9 +7,13 @@
 
 class NomRubrique : public InterfaceMot {
 
+private:
+  std::string nom_table;
+
 public:
-  NomRubrique(std::string mot) : InterfaceMot(mot,"nom_rubrique") {};
+  NomRubrique(std::string mot,std::string nom_table) : InterfaceMot(mot,"nom_rubrique"), nom_table(nom_table) {};
   void updateRequete(Requete* requete);
+  std::string getNomTable() const { return nom_table; };
 
 };
 

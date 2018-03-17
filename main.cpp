@@ -12,11 +12,13 @@ int main(int argc, char* argv[]){
   autom.transition("Quels");
   autom.transition("sont");
   autom.transition("les");
+  /*autom.transition("noms");
+  autom.transition("et");
+  autom.transition("prenoms");
+  autom.transition("des");*/
   autom.transition("etudiants");
-  autom.transition("nom");
-  autom.transition("prenom");
   autom.transition("de");
-  autom.transition("m1_info");
+  autom.transition("bac_+5");
   autom.transition("?");
 
   cout << autom.getRequete() << endl;

@@ -58,7 +58,7 @@ void Automate::loadAlpha(char* inputFile) {
   ifstream file;
   file.open(inputFile);
 
-  string mot, type_mot;
+  string mot, type_mot, nom_champ, nom_table;
   bool running = true;
 
   if(file.is_open()) {
@@ -80,15 +80,23 @@ void Automate::loadAlpha(char* inputFile) {
               p = new Determinant(mot);
             } else {
               if(type_mot.compare("nom_rubrique") == 0) {
-                p = new NomRubrique(mot);
+                file >> nom_table;
+                p = new NomRubrique(mot,nom_table);
               } else {
                 if(type_mot.compare("fin") == 0) {
                   p = new FinPhrase(mot);
                 } else {
                   if(type_mot.compare("valeur_rubrique") == 0) {
-                    p = new ValeurRubrique(mot);
+                    file >> nom_champ >> nom_table;
+                    p = new ValeurRubrique(mot, nom_champ, nom_table);
                   } else {
-                    p = new Qualificateur(mot,type_mot);
+                    if(type_mot.compare("qualificateur") == 0) {
+                      file >> nom_champ >> nom_table;
+                      p = new Qualificateur(mot,nom_champ,nom_table);
+                    } else {
+                      cerr << "Mot inconnu dans le lexique : " << mot << endl;
+                      exit(1);
+                    }
                   }
                 }
               }
