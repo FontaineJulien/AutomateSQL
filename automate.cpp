@@ -3,6 +3,7 @@
 #include <fstream>
 #include<cstdlib>
 #include <locale>
+#include <boost/algorithm/string.hpp>
 
 #include "pronomInterrogatif.h"
 #include "verbe.h"
@@ -26,6 +27,20 @@ std::string to_lower(const std::string& str) {
 
 Automate::Automate() {
   requete = new Requete();
+  this->loadAlpha((char*)"dico.txt");
+  this->loadAutomate((char*)"auto1.txt");
+}
+
+std::string Automate::start(string str) {
+
+  vector<string> str_tab;
+  boost::split(str_tab, str, boost::is_any_of("\t "));
+
+  for(vector<string>::iterator it = str_tab.begin(); it != str_tab.end(); ++it){
+    this->transition(*it);
+  }
+
+  return this->getRequete();
 }
 
 InterfaceMot* Automate::find(const std::string& str_mot) {
@@ -42,7 +57,6 @@ void Automate::transition(const string& str_mot) {
   InterfaceMot* mot = find(str_mot);
   if(mot != NULL){
     current = current->doTransition(mot,requete);
-    //cout << current->getEtiquette() << endl;
     if(current == NULL) {
       cerr << "Mot invalide : " << str_mot << endl;
       exit(1);
@@ -135,14 +149,8 @@ void Automate::loadAutomate(char* inputFile) {
 
     for(unsigned int i = 0; i < nb_transition; i++){
       file >> etat_src >> etat_dst >> type_mot;
-      //cout << etat_src << " " << etat_dst << " " << type_mot << endl;
       autom[etat_src-1]->setTransition(type_mot, autom[etat_dst-1]);
     }
-
-    /*for(vector<Etat*>::iterator it = autom.begin(); it != autom.end(); ++it) {
-      (*it)->printTransitions();
-      cout << endl;
-    }*/
 
     file.close();
 

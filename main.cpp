@@ -1,27 +1,19 @@
 #include <iostream>
+#include<cstdlib>
+
 #include "automate.h"
 
 using namespace std;
 
 int main(int argc, char* argv[]){
 
+  if(argc != 2) {
+    cerr << "Nombre d'argument invalide" << endl;
+    exit(1);
+  }
+
   Automate autom = Automate();
-  autom.loadAlpha((char*)"dico.txt");
-  autom.loadAutomate((char*)"auto1.txt");
-
-  autom.transition("Quels");
-  autom.transition("sont");
-  autom.transition("les");
-  /*autom.transition("noms");
-  autom.transition("et");
-  autom.transition("prenoms");
-  autom.transition("des");*/
-  autom.transition("etudiants");
-  autom.transition("de");
-  autom.transition("bac_+5");
-  autom.transition("?");
-
-  cout << autom.getRequete() << endl;
+  cout << autom.start(argv[1]) << endl;
 
   return 0;
 }
